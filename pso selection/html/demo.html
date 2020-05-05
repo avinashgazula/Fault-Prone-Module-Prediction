@@ -1,0 +1,587 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>PSO SELECTION DEMO</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-03-23"><meta name="DC.source" content="demo.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>PSO SELECTION DEMO</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">Initialize</a></li><li><a href="#3">DEMO 1</a></li><li><a href="#4">Demo 1 output</a></li><li><a href="#5">DEMO 2</a></li><li><a href="#6">Demo 2 output</a></li></ul></div><div><ul><li>Developer Er.Abbas Manthiri S</li><li>EMail <a href="mailto:abbasmanthiribe@gmail.com">abbasmanthiribe@gmail.com</a></li><li>Date 23-03-2017</li><li><a href="https://en.wikipedia.org/wiki/Particle_swarm_optimization">Referece</a></li></ul></div><h2>Initialize<a name="2"></a></h2><pre class="codeinput">clc
+clear <span class="string">all</span>
+warning <span class="string">off</span> <span class="string">all</span>
+</pre><h2>DEMO 1<a name="3"></a></h2><pre class="codeinput">row=50;
+col=10;
+Data=randi([1,50],[row,col]);
+disp(<span class="string">'Data----&gt;'</span>)
+disp(Data)
+nOfSelection=3;
+population=20;
+itrationMax=inf;
+fun=@meandata;
+[Selection , SelectionValue]=psoSelection(Data,nOfSelection,population,itrationMax,fun);
+MinimizedData=Data(:,Selection);
+disp(<span class="string">'Selection----&gt;'</span>)
+disp(Selection)
+disp(<span class="string">'SelectionValue----&gt;'</span>)
+disp(SelectionValue)
+</pre><pre class="codeoutput">Data----&gt;
+    49     9    13    18    29     2    35    14    31    34
+    23     4    23    48    29    19    32     5     5    47
+     5    24    36     3    23    33     7     6     8    48
+    26    28    25    20    41    11    26    32    17    32
+    13    48    13    23    17    26     3     5     9    31
+     7     9    22    44    30    45    11    16    47    38
+     7     6     4    27    10    23    37     3     3    10
+    18    11    26    24    35     7    41    34     5    29
+    12    21    31     4    36     6    30    43    47    21
+    27    11    32    10     5     4     9     8    21    24
+    35    33    44    38     2    24    16    16     3     7
+     8    29    11    13    49    38    13     5    35    24
+    31    32    13    22    15    32    15    12    39    27
+     7    41    50    42     3    46    36    12    34    21
+    46    25    17     7    37     8    20    47    32    27
+    33     7    29     1     8    22    12     1     2    14
+     8    42    29    26    40    26    48    31    46    16
+    39     8    21    23    44    16    30     8    16    18
+    35    20    30     4     8    48    28    10    36    48
+    33    34     5    11    38    17    40    46    48    21
+    42    18    27    34     8    26    41    26    10    44
+    33    32    27     3    20    41    15    28    11     6
+     3    22    19     5    11    24    26    29     8    47
+    39     8    10    11    48     1    42    50    40    16
+     9    14    25    13    21     3    26    12    15    13
+    21    36    24     6    33    22     4    15    46    21
+    15    48    28     6     4    14    26    44    47    12
+    12    50    33    42    50    30     1    15    31    38
+    10    30    17     5     8    39    43     6    11    21
+    31    18    42     4    49    24    49    23    22    14
+    27     4    29    35    35     6    22    35    11    48
+    14    49    35     3    39    44    44    25    31    14
+     5     9    36     6    22    37    41    36    27    42
+    39    26    34     5    48    10    45     1    10     6
+    24    36    19     9    21    40    35    31    11    13
+    28     1    14     1    25    50    14    27    42     3
+    16    33    10     1    28    30    23    33    27    26
+    31    46    42    18    49    49    10    15    22    43
+    42    30    34    11    25     3    41    26    18     8
+    36    48     8    15    18    11    32    37    44    48
+    30    43     4    42    17    11     9    47     9    34
+    32     6    23    50    29    10    42    36    34    13
+     7    18     7    33     6    26    22    17    31     9
+    27    28    48    32    14    33    23    21    36    41
+     6    28    22    37    18    31    22    13    15    25
+    14    46    29    14    21    35    50    30    22    48
+     2    21    28    30    11     3    41    17    40    46
+    11    39    11    12     1    40    50    14    39    23
+     6     3    33    19    19     8    29    38    26    17
+     8    24     1    13    31    32    16    33    32    39
+
+
+Iteration 1 gbest value of  fitness= 21.273333
+Iteration 2 gbest value of  fitness= 21.273333
+Iteration 3 gbest value of  fitness= 21.273333
+Iteration 4 gbest value of  fitness= 21.273333
+Iteration 5 gbest value of  fitness= 21.273333
+Iteration 6 gbest value of  fitness= 21.273333
+Iteration 7 gbest value of  fitness= 21.273333
+Iteration 8 gbest value of  fitness= 21.273333
+Iteration 9 gbest value of  fitness= 21.273333
+Iteration 10 gbest value of  fitness= 21.273333
+Iteration 11 gbest value of  fitness= 21.273333
+Iteration 12 gbest value of  fitness= 21.273333
+Iteration 13 gbest value of  fitness= 21.273333
+Iteration 14 gbest value of  fitness= 21.273333
+Iteration 15 gbest value of  fitness= 21.273333
+Iteration 16 gbest value of  fitness= 21.273333
+Iteration 17 gbest value of  fitness= 21.273333
+Iteration 18 gbest value of  fitness= 21.273333
+Iteration 19 gbest value of  fitness= 21.273333
+Iteration 20 gbest value of  fitness= 21.273333
+Iteration 21 gbest value of  fitness= 21.273333
+Iteration 22 gbest value of  fitness= 21.273333
+Iteration 23 gbest value of  fitness= 21.273333
+Iteration 24 gbest value of  fitness= 21.273333
+Iteration 25 gbest value of  fitness= 20.926667
+Iteration 26 gbest value of  fitness= 20.926667
+Iteration 27 gbest value of  fitness= 20.926667
+Iteration 28 gbest value of  fitness= 20.926667
+Iteration 29 gbest value of  fitness= 20.926667
+Iteration 30 gbest value of  fitness= 20.926667
+Iteration 31 gbest value of  fitness= 20.926667
+Iteration 32 gbest value of  fitness= 20.926667
+Iteration 33 gbest value of  fitness= 20.926667
+Iteration 34 gbest value of  fitness= 20.926667
+Iteration 35 gbest value of  fitness= 20.926667
+Iteration 36 gbest value of  fitness= 20.926667
+Iteration 37 gbest value of  fitness= 20.926667
+Iteration 38 gbest value of  fitness= 20.926667
+Iteration 39 gbest value of  fitness= 20.926667
+Iteration 40 gbest value of  fitness= 20.926667
+Iteration 41 gbest value of  fitness= 20.926667
+Iteration 42 gbest value of  fitness= 20.926667
+Iteration 43 gbest value of  fitness= 20.926667
+Iteration 44 gbest value of  fitness= 20.926667
+Iteration 45 gbest value of  fitness= 20.926667
+Iteration 46 gbest value of  fitness= 20.926667
+Iteration 47 gbest value of  fitness= 20.926667
+Iteration 48 gbest value of  fitness= 20.926667
+Iteration 49 gbest value of  fitness= 20.926667
+Iteration 50 gbest value of  fitness= 20.926667
+Iteration 51 gbest value of  fitness= 20.926667
+Iteration 52 gbest value of  fitness= 20.926667
+Iteration 53 gbest value of  fitness= 20.926667
+Iteration 54 gbest value of  fitness= 20.926667
+Iteration 55 gbest value of  fitness= 20.926667
+Iteration 56 gbest value of  fitness= 20.926667
+Iteration 57 gbest value of  fitness= 20.926667
+Iteration 58 gbest value of  fitness= 20.926667
+Iteration 59 gbest value of  fitness= 20.926667
+Iteration 60 gbest value of  fitness= 20.926667
+Iteration 61 gbest value of  fitness= 20.926667
+Iteration 62 gbest value of  fitness= 20.926667
+Iteration 63 gbest value of  fitness= 20.926667
+Iteration 64 gbest value of  fitness= 20.926667
+Iteration 65 gbest value of  fitness= 20.926667
+Iteration 66 gbest value of  fitness= 20.926667
+Iteration 67 gbest value of  fitness= 20.926667
+Iteration 68 gbest value of  fitness= 20.926667
+Iteration 69 gbest value of  fitness= 20.926667
+Iteration 70 gbest value of  fitness= 20.926667
+Iteration 71 gbest value of  fitness= 20.926667
+Iteration 72 gbest value of  fitness= 20.926667
+Iteration 73 gbest value of  fitness= 20.926667
+Iteration 74 gbest value of  fitness= 20.926667
+Iteration 75 gbest value of  fitness= 20.926667
+Iteration 76 gbest value of  fitness= 20.926667
+Iteration 77 gbest value of  fitness= 20.926667
+Iteration 78 gbest value of  fitness= 20.926667
+Iteration 79 gbest value of  fitness= 20.926667
+Iteration 80 gbest value of  fitness= 20.926667
+Iteration 81 gbest value of  fitness= 20.926667
+Iteration 82 gbest value of  fitness= 20.926667
+Iteration 83 gbest value of  fitness= 20.926667
+Iteration 84 gbest value of  fitness= 20.926667
+Iteration 85 gbest value of  fitness= 20.926667
+Iteration 86 gbest value of  fitness= 20.926667
+Iteration 87 gbest value of  fitness= 20.926667
+Iteration 88 gbest value of  fitness= 20.926667
+Iteration 89 gbest value of  fitness= 20.926667
+Iteration 90 gbest value of  fitness= 20.926667
+Iteration 91 gbest value of  fitness= 20.926667
+Iteration 92 gbest value of  fitness= 20.926667
+Iteration 93 gbest value of  fitness= 20.926667
+Iteration 94 gbest value of  fitness= 20.926667
+Iteration 95 gbest value of  fitness= 20.926667
+Iteration 96 gbest value of  fitness= 20.926667
+Iteration 97 gbest value of  fitness= 20.926667
+Iteration 98 gbest value of  fitness= 20.926667
+Iteration 99 gbest value of  fitness= 20.926667
+Iteration 100 gbest value of  fitness= 20.926667
+Iteration 101 gbest value of  fitness= 20.926667
+Iteration 102 gbest value of  fitness= 20.926667
+Iteration 103 gbest value of  fitness= 20.926667
+Iteration 104 gbest value of  fitness= 20.926667
+Iteration 105 gbest value of  fitness= 20.926667
+Iteration 106 gbest value of  fitness= 20.926667
+Iteration 107 gbest value of  fitness= 20.926667
+Iteration 108 gbest value of  fitness= 20.926667
+Iteration 109 gbest value of  fitness= 20.926667
+Iteration 110 gbest value of  fitness= 20.926667
+Iteration 111 gbest value of  fitness= 20.926667
+Iteration 112 gbest value of  fitness= 20.926667
+Iteration 113 gbest value of  fitness= 20.926667
+Iteration 114 gbest value of  fitness= 20.926667
+Iteration 115 gbest value of  fitness= 20.926667
+Iteration 116 gbest value of  fitness= 20.926667
+Iteration 117 gbest value of  fitness= 20.926667
+Iteration 118 gbest value of  fitness= 20.926667
+Iteration 119 gbest value of  fitness= 20.926667
+Iteration 120 gbest value of  fitness= 20.926667
+Iteration 121 gbest value of  fitness= 20.926667
+Iteration 122 gbest value of  fitness= 20.926667
+Iteration 123 gbest value of  fitness= 20.926667
+Iteration 124 gbest value of  fitness= 20.926667
+Iteration 125 gbest value of  fitness= 20.926667
+Iteration 126 gbest value of  fitness= 20.926667
+Iteration 127 gbest value of  fitness= 20.926667
+Iteration 128 gbest value of  fitness= 20.926667
+Iteration 129 gbest value of  fitness= 20.926667
+Iteration 130 gbest value of  fitness= 20.926667
+Iteration 131 gbest value of  fitness= 20.926667
+Iteration 132 gbest value of  fitness= 20.926667
+Iteration 133 gbest value of  fitness= 20.926667
+Iteration 134 gbest value of  fitness= 20.926667
+Iteration 135 gbest value of  fitness= 20.926667
+Iteration 136 gbest value of  fitness= 20.926667
+Iteration 137 gbest value of  fitness= 20.926667
+Iteration 138 gbest value of  fitness= 20.926667
+Iteration 139 gbest value of  fitness= 20.926667
+Iteration 140 gbest value of  fitness= 20.926667
+Iteration 141 gbest value of  fitness= 20.926667
+Iteration 142 gbest value of  fitness= 20.926667
+Iteration 143 gbest value of  fitness= 20.926667
+Iteration 144 gbest value of  fitness= 20.926667
+Iteration 145 gbest value of  fitness= 20.926667
+Iteration 146 gbest value of  fitness= 20.926667
+Iteration 147 gbest value of  fitness= 20.926667
+Iteration 148 gbest value of  fitness= 20.926667
+Iteration 149 gbest value of  fitness= 20.926667
+Iteration 150 gbest value of  fitness= 20.926667
+Iteration 151 gbest value of  fitness= 20.926667
+Iteration 152 gbest value of  fitness= 20.926667
+Iteration 153 gbest value of  fitness= 20.926667
+Iteration 154 gbest value of  fitness= 20.926667
+Iteration 155 gbest value of  fitness= 20.926667
+Iteration 156 gbest value of  fitness= 20.926667
+Iteration 157 gbest value of  fitness= 20.926667
+Iteration 158 gbest value of  fitness= 20.926667
+Iteration 159 gbest value of  fitness= 20.926667
+Iteration 160 gbest value of  fitness= 20.926667
+Iteration 161 gbest value of  fitness= 20.926667
+Iteration 162 gbest value of  fitness= 20.926667
+Iteration 163 gbest value of  fitness= 20.926667
+Iteration 164 gbest value of  fitness= 20.926667
+Iteration 165 gbest value of  fitness= 20.926667
+******Iteration completed******
+Selection----&gt;
+     8     4     1
+
+SelectionValue----&gt;
+       20.927
+
+</pre><h2>Demo 1 output<a name="4"></a></h2><pre class="codeinput">disp(<span class="string">'MinimizedData----&gt;'</span>)
+disp(MinimizedData)
+</pre><pre class="codeoutput">MinimizedData----&gt;
+    14    18    49
+     5    48    23
+     6     3     5
+    32    20    26
+     5    23    13
+    16    44     7
+     3    27     7
+    34    24    18
+    43     4    12
+     8    10    27
+    16    38    35
+     5    13     8
+    12    22    31
+    12    42     7
+    47     7    46
+     1     1    33
+    31    26     8
+     8    23    39
+    10     4    35
+    46    11    33
+    26    34    42
+    28     3    33
+    29     5     3
+    50    11    39
+    12    13     9
+    15     6    21
+    44     6    15
+    15    42    12
+     6     5    10
+    23     4    31
+    35    35    27
+    25     3    14
+    36     6     5
+     1     5    39
+    31     9    24
+    27     1    28
+    33     1    16
+    15    18    31
+    26    11    42
+    37    15    36
+    47    42    30
+    36    50    32
+    17    33     7
+    21    32    27
+    13    37     6
+    30    14    14
+    17    30     2
+    14    12    11
+    38    19     6
+    33    13     8
+
+</pre><h2>DEMO 2<a name="5"></a></h2><pre class="codeinput">nOfSelection=4;
+population=10;
+itrationMax=100;
+fun=@stddata;
+[Selection , SelectionValue]=psoSelection(Data,nOfSelection,population,itrationMax,fun);
+MinimizedData=Data(:,Selection);
+disp(<span class="string">'Selection----&gt;'</span>)
+disp(Selection)
+disp(<span class="string">'SelectionValue----&gt;'</span>)
+disp(SelectionValue)
+</pre><pre class="codeoutput">
+Iteration 1 gbest value of  fitness= 13.426886
+Iteration 2 gbest value of  fitness= 13.426886
+Iteration 3 gbest value of  fitness= 13.404519
+Iteration 4 gbest value of  fitness= 13.368620
+Iteration 5 gbest value of  fitness= 13.368620
+Iteration 6 gbest value of  fitness= 13.368620
+Iteration 7 gbest value of  fitness= 13.368620
+Iteration 8 gbest value of  fitness= 13.368620
+Iteration 9 gbest value of  fitness= 13.346253
+Iteration 10 gbest value of  fitness= 13.346253
+Iteration 11 gbest value of  fitness= 13.346253
+Iteration 12 gbest value of  fitness= 13.346253
+Iteration 13 gbest value of  fitness= 13.346253
+Iteration 14 gbest value of  fitness= 13.346253
+Iteration 15 gbest value of  fitness= 13.346253
+Iteration 16 gbest value of  fitness= 13.346253
+Iteration 17 gbest value of  fitness= 13.346253
+Iteration 18 gbest value of  fitness= 13.346253
+Iteration 19 gbest value of  fitness= 13.346253
+Iteration 20 gbest value of  fitness= 13.346253
+Iteration 21 gbest value of  fitness= 13.346253
+Iteration 22 gbest value of  fitness= 13.241083
+Iteration 23 gbest value of  fitness= 13.241083
+Iteration 24 gbest value of  fitness= 13.241083
+Iteration 25 gbest value of  fitness= 13.241083
+Iteration 26 gbest value of  fitness= 13.241083
+Iteration 27 gbest value of  fitness= 13.241083
+Iteration 28 gbest value of  fitness= 13.241083
+Iteration 29 gbest value of  fitness= 13.241083
+Iteration 30 gbest value of  fitness= 13.241083
+Iteration 31 gbest value of  fitness= 13.241083
+Iteration 32 gbest value of  fitness= 13.241083
+Iteration 33 gbest value of  fitness= 13.241083
+Iteration 34 gbest value of  fitness= 13.241083
+Iteration 35 gbest value of  fitness= 13.241083
+Iteration 36 gbest value of  fitness= 13.241083
+Iteration 37 gbest value of  fitness= 13.241083
+Iteration 38 gbest value of  fitness= 13.241083
+Iteration 39 gbest value of  fitness= 13.241083
+Iteration 40 gbest value of  fitness= 13.241083
+Iteration 41 gbest value of  fitness= 13.241083
+Iteration 42 gbest value of  fitness= 13.241083
+Iteration 43 gbest value of  fitness= 13.241083
+Iteration 44 gbest value of  fitness= 13.241083
+Iteration 45 gbest value of  fitness= 13.241083
+Iteration 46 gbest value of  fitness= 13.241083
+Iteration 47 gbest value of  fitness= 13.241083
+Iteration 48 gbest value of  fitness= 13.241083
+Iteration 49 gbest value of  fitness= 13.241083
+Iteration 50 gbest value of  fitness= 13.241083
+Iteration 51 gbest value of  fitness= 13.241083
+Iteration 52 gbest value of  fitness= 13.241083
+Iteration 53 gbest value of  fitness= 13.241083
+Iteration 54 gbest value of  fitness= 13.241083
+Iteration 55 gbest value of  fitness= 13.241083
+Iteration 56 gbest value of  fitness= 13.241083
+Iteration 57 gbest value of  fitness= 13.241083
+Iteration 58 gbest value of  fitness= 13.241083
+Iteration 59 gbest value of  fitness= 13.241083
+Iteration 60 gbest value of  fitness= 13.241083
+Iteration 61 gbest value of  fitness= 13.241083
+Iteration 62 gbest value of  fitness= 13.241083
+Iteration 63 gbest value of  fitness= 13.241083
+Iteration 64 gbest value of  fitness= 13.241083
+Iteration 65 gbest value of  fitness= 13.241083
+Iteration 66 gbest value of  fitness= 13.241083
+Iteration 67 gbest value of  fitness= 13.241083
+Iteration 68 gbest value of  fitness= 13.241083
+Iteration 69 gbest value of  fitness= 13.241083
+Iteration 70 gbest value of  fitness= 13.241083
+Iteration 71 gbest value of  fitness= 13.241083
+Iteration 72 gbest value of  fitness= 13.241083
+Iteration 73 gbest value of  fitness= 13.241083
+Iteration 74 gbest value of  fitness= 13.241083
+Iteration 75 gbest value of  fitness= 13.241083
+Iteration 76 gbest value of  fitness= 13.241083
+Iteration 77 gbest value of  fitness= 13.241083
+Iteration 78 gbest value of  fitness= 13.241083
+Iteration 79 gbest value of  fitness= 13.241083
+Iteration 80 gbest value of  fitness= 13.241083
+Iteration 81 gbest value of  fitness= 13.241083
+Iteration 82 gbest value of  fitness= 13.241083
+Iteration 83 gbest value of  fitness= 13.241083
+Iteration 84 gbest value of  fitness= 13.241083
+Iteration 85 gbest value of  fitness= 13.241083
+Iteration 86 gbest value of  fitness= 13.241083
+Iteration 87 gbest value of  fitness= 13.241083
+Iteration 88 gbest value of  fitness= 13.241083
+Iteration 89 gbest value of  fitness= 13.241083
+Iteration 90 gbest value of  fitness= 13.241083
+Iteration 91 gbest value of  fitness= 13.241083
+Iteration 92 gbest value of  fitness= 13.241083
+Iteration 93 gbest value of  fitness= 13.241083
+Iteration 94 gbest value of  fitness= 13.241083
+Iteration 95 gbest value of  fitness= 13.241083
+Iteration 96 gbest value of  fitness= 13.241083
+Iteration 97 gbest value of  fitness= 13.241083
+Iteration 98 gbest value of  fitness= 13.241083
+Iteration 99 gbest value of  fitness= 13.241083
+Iteration 100 gbest value of  fitness= 13.241083
+******Iteration completed******
+Selection----&gt;
+     8     1     7     3
+
+SelectionValue----&gt;
+       13.241
+
+</pre><h2>Demo 2 output<a name="6"></a></h2><pre class="codeinput">disp(<span class="string">'MinimizedData----&gt;'</span>)
+disp(MinimizedData)
+</pre><pre class="codeoutput">MinimizedData----&gt;
+    14    49    35    13
+     5    23    32    23
+     6     5     7    36
+    32    26    26    25
+     5    13     3    13
+    16     7    11    22
+     3     7    37     4
+    34    18    41    26
+    43    12    30    31
+     8    27     9    32
+    16    35    16    44
+     5     8    13    11
+    12    31    15    13
+    12     7    36    50
+    47    46    20    17
+     1    33    12    29
+    31     8    48    29
+     8    39    30    21
+    10    35    28    30
+    46    33    40     5
+    26    42    41    27
+    28    33    15    27
+    29     3    26    19
+    50    39    42    10
+    12     9    26    25
+    15    21     4    24
+    44    15    26    28
+    15    12     1    33
+     6    10    43    17
+    23    31    49    42
+    35    27    22    29
+    25    14    44    35
+    36     5    41    36
+     1    39    45    34
+    31    24    35    19
+    27    28    14    14
+    33    16    23    10
+    15    31    10    42
+    26    42    41    34
+    37    36    32     8
+    47    30     9     4
+    36    32    42    23
+    17     7    22     7
+    21    27    23    48
+    13     6    22    22
+    30    14    50    29
+    17     2    41    28
+    14    11    50    11
+    38     6    29    33
+    33     8    16     1
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% PSO SELECTION DEMO
+%%
+% 
+% * Developer Er.Abbas Manthiri S
+% * EMail abbasmanthiribe@gmail.com
+% * Date 23-03-2017
+% * <https://en.wikipedia.org/wiki/Particle_swarm_optimization Referece>
+% 
+
+%% Initialize
+clc
+clear all
+warning off all
+%% DEMO 1
+row=50;
+col=10;
+Data=randi([1,50],[row,col]);
+disp('DataREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH>')
+disp(Data)
+nOfSelection=3;
+population=20;
+itrationMax=inf;
+fun=@meandata;
+[Selection , SelectionValue]=psoSelection(Data,nOfSelection,population,itrationMax,fun);
+MinimizedData=Data(:,Selection);
+disp('SelectionREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH>')
+disp(Selection)
+disp('SelectionValueREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH>')
+disp(SelectionValue)
+%% Demo 1 output
+disp('MinimizedDataREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH>')
+disp(MinimizedData)
+%% DEMO 2
+nOfSelection=4;
+population=10;
+itrationMax=100;
+fun=@stddata;
+[Selection , SelectionValue]=psoSelection(Data,nOfSelection,population,itrationMax,fun);
+MinimizedData=Data(:,Selection);
+disp('SelectionREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH>')
+disp(Selection)
+disp('SelectionValueREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH>')
+disp(SelectionValue)
+%% Demo 2 output
+disp('MinimizedDataREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH>')
+disp(MinimizedData)
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,44 @@
+
+Iteration 1 gbest value of  fitness= 10.080437
+Iteration 2 gbest value of  fitness= 10.080437
+Iteration 3 gbest value of  fitness= 10.080437
+Iteration 4 gbest value of  fitness= 10.080437
+Iteration 5 gbest value of  fitness= 10.080437
+Iteration 6 gbest value of  fitness= 10.080437
+Iteration 7 gbest value of  fitness= 4.409617
+Iteration 8 gbest value of  fitness= 4.409617
+Iteration 9 gbest value of  fitness= 4.409617
+Iteration 10 gbest value of  fitness= 4.409617
+Iteration 11 gbest value of  fitness= 4.409617
+Iteration 12 gbest value of  fitness= 4.409617
+Iteration 13 gbest value of  fitness= 4.409617
+Iteration 14 gbest value of  fitness= 4.409617
+Iteration 15 gbest value of  fitness= 4.409617
+Iteration 16 gbest value of  fitness= 4.409617
+Iteration 17 gbest value of  fitness= 4.409617
+Iteration 18 gbest value of  fitness= 4.409617
+Iteration 19 gbest value of  fitness= 4.409617
+Iteration 20 gbest value of  fitness= 4.409617
+Iteration 21 gbest value of  fitness= 4.409617
+Iteration 22 gbest value of  fitness= 4.409617
+Iteration 23 gbest value of  fitness= 4.409617
+Iteration 24 gbest value of  fitness= 4.409617
+Iteration 25 gbest value of  fitness= 4.409617
+Iteration 26 gbest value of  fitness= 4.409617
+Iteration 27 gbest value of  fitness= 4.409617
+Iteration 28 gbest value of  fitness= 4.409617
+Iteration 29 gbest value of  fitness= 4.409617
+Iteration 30 gbest value of  fitness= 4.409617
+Iteration 31 gbest value of  fitness= 4.409617
+Iteration 32 gbest value of  fitness= 4.409617
+Iteration 33 gbest value of  fitness= 4.409617
+Iteration 34 gbest value of  fitness= 4.409617
+Iteration 35 gbest value of  fitness= 4.409617
+Iteration 36 gbest value of  fitness= 4.409617
+Iteration 37 gbest value of  fitness= 4.409617
+Iteration 38 gbest value of  fitness= 4.409617
+******Iteration completed******
+Selected Features---->
+     7     3
+
+>> 
